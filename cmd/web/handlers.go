@@ -14,8 +14,14 @@ func home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// home must be first in slice!
+	files := []string{
+		"./ui/html/home.page.tmpl",
+		"./ui/html/base.layout.tmpl",
+	}
+
 	// read template file into a template set.
-	ts, err := template.ParseFiles("./ui/html/home.page.tmpl.html")
+	ts, err := template.ParseFiles(files...)
 	if err != nil {
 		log.Println(err.Error())
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
