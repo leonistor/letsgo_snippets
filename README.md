@@ -14,3 +14,9 @@ From https://lets-go.alexedwards.net/
 ### git: show older file version
 
 `git show a23ffe79ca:main.go`
+
+### html linter
+
+[tidy](https://www.html-tidy.org/)
+
+`http POST :8080/ | tidy -errors -quiet`
