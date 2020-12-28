@@ -1,3 +1,7 @@
 CREATE USER snippetbox WITH PASSWORD 'snippetbox';
 
-GRANT ALL ON DATABASE snippets TO snippetbox;
+-- GRANT ALL ON DATABASE snippets TO snippetbox;
+-- GRANT ALL PRIVILEGES ON DATABASE snippets TO snippetbox;
+-- GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to snippetbox;
+-- GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public to snippetbox;
+-- GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public to snippetbox;

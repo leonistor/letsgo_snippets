@@ -2,6 +2,10 @@
 
 From https://lets-go.alexedwards.net/
 
+## TODO
+
+- [ ] create postgresql role/user with schema privileges.
+
 ## Tips
 
 ### Project structure

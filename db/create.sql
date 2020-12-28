@@ -7,3 +7,7 @@ CREATE TABLE IF NOT EXISTS snippets (
 );
 
 CREATE INDEX IF NOT EXISTS idx_snippets_created ON snippets(created);
+
+GRANT ALL ON snippets TO snippetbox;
+
+GRANT ALL ON snippets_id_seq TO snippetbox;
