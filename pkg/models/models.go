@@ -5,10 +5,10 @@ import (
 	"time"
 )
 
-// ErrNoRecord indicates no record found
+// ErrNoRecord indicates no record found.
 var ErrNoRecord = errors.New("models: no matching record found")
 
-// Snippet represents a snippet
+// Snippet represents a snippet.
 type Snippet struct {
 	ID      int
 	Title   string
