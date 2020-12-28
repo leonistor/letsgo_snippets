@@ -12,7 +12,15 @@ type SnippetModel struct {
 
 // Insert a new snippet into the database.
 func (m *SnippetModel) Insert(title, content, expires string) (int, error) {
-	return 0, nil
+	stmt := `INSERT INTO snippets (title, content, expires)
+	VALUES ($1, $2, NOW() + $3::interval)
+	RETURNING id`
+
+	// https://www.calhoun.io/inserting-records-into-a-postgresql-database-with-gos-database-sql-package/
+	id := 0
+	err := m.DB.QueryRow(stmt, title, content, expires).Scan(&id)
+
+	return id, err
 }
 
 // Get return a specific snippet.

@@ -24,3 +24,9 @@ From https://lets-go.alexedwards.net/
 [tidy](https://www.html-tidy.org/)
 
 `http POST :8080/ | tidy -errors -quiet`
+
+### interval in prepared pg statement:
+
+Use `$1::interval`. See [superior query](https://dba.stackexchange.com/questions/208580/passing-value-of-datatype-interval-in-parametrized-query)
+
+Or use [How I use Postgres with Go](https://jbrandhorst.com/post/postgres/)
