@@ -3,7 +3,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"html/template"
 	"net/http"
 	"snippetbox/pkg/models"
 	"strconv"
@@ -15,25 +14,36 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// home must be first in slice!
-	files := []string{
-		"./ui/html/home.page.tmpl",
-		"./ui/html/base.layout.tmpl",
-		"./ui/html/footer.partial.tmpl",
-	}
-
-	// read template file into a template set.
-	ts, err := template.ParseFiles(files...)
+	s, err := app.snippets.Latest()
 	if err != nil {
 		app.serverError(w, err)
 		return
 	}
 
-	// write template content to response body; no data yet
-	err = ts.Execute(w, nil)
-	if err != nil {
-		app.serverError(w, err)
+	for _, snippet := range s {
+		fmt.Fprintf(w, "%v\n", snippet)
 	}
+
+	/*
+		files := []string{
+			"./ui/html/home.page.tmpl",
+			"./ui/html/base.layout.tmpl",
+			"./ui/html/footer.partial.tmpl",
+		}
+
+		// read template file into a template set.
+		ts, err := template.ParseFiles(files...)
+		if err != nil {
+			app.serverError(w, err)
+			return
+		}
+
+		// write template content to response body; no data yet
+		err = ts.Execute(w, nil)
+		if err != nil {
+			app.serverError(w, err)
+		}
+	*/
 }
 
 func (app *application) showSnippet(w http.ResponseWriter, r *http.Request) {

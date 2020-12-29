@@ -45,5 +45,27 @@ func (m *SnippetModel) Get(id int) (*models.Snippet, error) {
 
 // Latest returns the most 10 recently created snippets.
 func (m *SnippetModel) Latest() ([]*models.Snippet, error) {
-	return nil, nil
+	stmt := `select id, title, content, created, expires
+	FROM snippets
+	WHERE expires > now()
+	ORDER BY created desc
+	LIMIT 10`
+
+	rows, err := m.DB.Query(stmt)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	snippets := []*models.Snippet{}
+	for rows.Next() {
+		s := &models.Snippet{}
+		err = rows.Scan(&s.ID, &s.Title, &s.Content, &s.Created, &s.Expires)
+		if err != nil {
+			return nil, err
+		}
+		snippets = append(snippets, s)
+	}
+
+	return snippets, nil
 }
