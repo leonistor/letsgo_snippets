@@ -30,3 +30,9 @@ From https://lets-go.alexedwards.net/
 Use `$1::interval`. See [superior query](https://dba.stackexchange.com/questions/208580/passing-value-of-datatype-interval-in-parametrized-query)
 
 Or use [How I use Postgres with Go](https://jbrandhorst.com/post/postgres/)
+
+### newline in text columns
+
+use ["extended" constant](https://www.postgresql.org/docs/current/sql-syntax-lexical.html#SQL-SYNTAX-STRINGS-ESCAPE)
+
+[example](https://jetrockets.pro/blog/p4awh4eomn-how-to-add-a-line-break-to-postgresql)
