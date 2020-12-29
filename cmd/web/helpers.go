@@ -26,12 +26,14 @@ func (app *application) render(w http.ResponseWriter, r *http.Request, name stri
 	ts, ok := app.templateCache[name]
 	if !ok {
 		app.serverError(w, fmt.Errorf("The template %s does not exists", name))
+		return
 	}
 
 	buf := new(bytes.Buffer)
 	err := ts.Execute(buf, td)
 	if err != nil {
 		app.serverError(w, err)
+		return
 	}
 
 	buf.WriteTo(w)
