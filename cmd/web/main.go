@@ -8,13 +8,16 @@ import (
 	"net/http"
 	"os"
 	"snippetbox/pkg/models/postgresql"
+	"time"
 
+	"github.com/golangcollege/sessions"
 	_ "github.com/lib/pq"
 )
 
 type application struct {
 	errorLog      *log.Logger
 	infoLog       *log.Logger
+	session       *sessions.Session
 	snippets      *postgresql.SnippetModel
 	templateCache map[string]*template.Template
 }
@@ -24,6 +27,9 @@ func main() {
 	dsn := flag.String("dsn",
 		"postgres://snippetbox:snippetbox@localhost/snippets?sslmode=disable",
 		"Postgresql data source name")
+	secret := flag.String("secret",
+		"EmIQQWJx57JaZQH0JqlkTpae0uBVarNKv4GE77YmhL4=",
+		"Secret session key")
 	flag.Parse()
 
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
@@ -40,9 +46,13 @@ func main() {
 		errorLog.Fatal(err)
 	}
 
+	session := sessions.New([]byte(*secret))
+	session.Lifetime = 12 * time.Hour
+
 	app := &application{
 		errorLog:      errorLog,
 		infoLog:       infoLog,
+		session:       session,
 		snippets:      &postgresql.SnippetModel{DB: db},
 		templateCache: templateCache,
 	}
