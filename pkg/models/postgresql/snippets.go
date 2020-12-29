@@ -2,6 +2,7 @@ package postgresql
 
 import (
 	"database/sql"
+	"errors"
 	"snippetbox/pkg/models"
 )
 
@@ -16,8 +17,6 @@ func (m *SnippetModel) Insert(title, content, expires string) (int, error) {
 	VALUES ($1, $2, (NOW() + '1 day'::INTERVAL * $3)::timestamptz)
 	RETURNING id`
 
-	// VALUES ($1, $2, NOW() + $3::interval)
-
 	id := 0
 	err := m.DB.
 		QueryRow(stmt, title, content, expires).
@@ -27,8 +26,21 @@ func (m *SnippetModel) Insert(title, content, expires string) (int, error) {
 }
 
 // Get return a specific snippet.
-func (m *SnippetModel) Get(id int) (int, error) {
-	return 0, nil
+func (m *SnippetModel) Get(id int) (*models.Snippet, error) {
+	stmt := `select id, title, content, created, expires
+	FROM snippets
+	WHERE expires > now() and id=$1`
+
+	row := m.DB.QueryRow(stmt, id)
+	s := &models.Snippet{}
+	err := row.Scan(&s.ID, &s.Title, &s.Content, &s.Created, &s.Expires)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, models.ErrNoRecord
+		}
+		return nil, err
+	}
+	return s, nil
 }
 
 // Latest returns the most 10 recently created snippets.
