@@ -1,19 +1,20 @@
-<form action="/snippet/create" method="post">
+<form action="/user/signup" method="post" novalidate>
   <div>
-    <label for="frm_title">Title: </label>
-    <input type="text" name="title" id="frm_title">
+    <label for="name">Name:</label>
+    <label class="error"></label>
+    <input type="text" name="name" id="name" value="">
   </div>
   <div>
-    <label for="frm_content">Content: </label>
-    <textarea name="content" id="frm_content"></textarea>
+    <label for="email">Email:</label>
+    <label class="error"></label>
+    <input type="email" name="email" id="email" value="">
   </div>
   <div>
-    <label for="frm_expires">Delete in:</label>
-    <input type="radio" name="expires" id="frm_expires" value="365" checked> One Year
-    <input type="radio" name="expires" id="frm_expires" value="7"> One Week
-    <input type="radio" name="expires" id="frm_expires" value="1"> One Day
+    <label for="password">Password:</label>
+    <label class="error"></label>
+    <input type="password" name="password" id="password">
   </div>
   <div>
-    <input type="submit" value="Publish snippet">
+    <input type="submit" value="Signup">
   </div>
 </form>
