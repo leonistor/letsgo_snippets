@@ -4,6 +4,9 @@
 # dot env
 .env
 
+# TLS certificates
+/tls/ 
+
 # big files!
 /data/
 
