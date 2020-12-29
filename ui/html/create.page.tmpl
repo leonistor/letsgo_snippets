@@ -1,3 +1,9 @@
+{{template "base" .}}
+
+{{define "title"}}Create a New Snippet{{end}}
+
+{{define "main"}}
+
 <form action="/snippet/create" method="post">
   <div>
     <label for="frm_title">Title: </label>
@@ -17,3 +23,5 @@
     <input type="submit" value="Publish snippet">
   </div>
 </form>
+
+{{end}}
