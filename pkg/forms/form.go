@@ -3,6 +3,7 @@ package forms
 import (
 	"fmt"
 	"net/url"
+	"regexp"
 	"strings"
 	"unicode/utf8"
 )
@@ -21,6 +22,9 @@ func New(data url.Values) *Form {
 	}
 }
 
+// EmailRegex regex for valid email.
+var EmailRegex = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
+
 // Required checks that fields are present and not blank.
 func (f *Form) Required(fields ...string) {
 	for _, field := range fields {
@@ -28,6 +32,17 @@ func (f *Form) Required(fields ...string) {
 		if strings.TrimSpace(value) == "" {
 			f.Errors.Add(field, "This field cannot be blank")
 		}
+	}
+}
+
+// MinLength check specific field to contain min d characters.
+func (f *Form) MinLength(field string, d int) {
+	value := f.Get(field)
+	if value == "" {
+		return
+	}
+	if utf8.RuneCountInString(value) < d {
+		f.Errors.Add(field, fmt.Sprintf("This field is too short (min %d characters)", d))
 	}
 }
 
@@ -54,6 +69,17 @@ func (f *Form) PermittedValues(field string, opts ...string) {
 		}
 	}
 	f.Errors.Add(field, "This field is invalid")
+}
+
+// MatchesPattern check field matches regex.
+func (f *Form) MatchesPattern(field string, pattern *regexp.Regexp) {
+	value := f.Get(field)
+	if value == "" {
+		return
+	}
+	if !pattern.MatchString(value) {
+		f.Errors.Add(field, "This field is invalid")
+	}
 }
 
 // Valid returns true if there are no errors.

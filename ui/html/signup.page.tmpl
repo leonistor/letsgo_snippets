@@ -22,7 +22,7 @@
     </div>
     <div>
       <label for="password">Password:</label>
-      {{with .Errors.Get "expires"}}
+      {{with .Errors.Get "password"}}
         <label class="error">{{.}}</label>
       {{end}}
       <input type="password" name="password" id="password">
