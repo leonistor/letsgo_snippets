@@ -88,6 +88,7 @@ func (app *application) signupUserForm(w http.ResponseWriter, r *http.Request) {
 		Form: forms.New(nil),
 	})
 }
+
 func (app *application) signupUser(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
@@ -155,4 +156,12 @@ func (app *application) logoutUser(w http.ResponseWriter, r *http.Request) {
 	app.session.Remove(r, "authenticatedUserID")
 	app.session.Put(r, "flash", "You've been logged out successfully.")
 	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+/**
+util
+*/
+
+func ping(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("OK"))
 }
