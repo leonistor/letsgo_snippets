@@ -16,6 +16,7 @@ type templateData struct {
 	IsAuthenticated bool
 	Snippet         *models.Snippet
 	Snippets        []*models.Snippet
+	User            *models.User
 }
 
 var functions = template.FuncMap{

@@ -32,6 +32,10 @@ func (app *application) routes() http.Handler {
 		dynamicMiddleware.
 			Append(app.requireAuthentication).
 			ThenFunc(app.logoutUser))
+	mux.Get("/user/profile",
+		dynamicMiddleware.
+			Append(app.requireAuthentication).
+			ThenFunc(app.profile))
 
 	mux.Get("/ping", http.HandlerFunc(ping))
 

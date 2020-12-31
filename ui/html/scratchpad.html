@@ -1,20 +1,14 @@
-<form action="/user/signup" method="post" novalidate>
-  <div>
-    <label for="name">Name:</label>
-    <label class="error"></label>
-    <input type="text" name="name" id="name" value="">
-  </div>
-  <div>
-    <label for="email">Email:</label>
-    <label class="error"></label>
-    <input type="email" name="email" id="email" value="">
-  </div>
-  <div>
-    <label for="password">Password:</label>
-    <label class="error"></label>
-    <input type="password" name="password" id="password">
-  </div>
-  <div>
-    <input type="submit" value="Signup">
-  </div>
-</form>
+<table>
+  <tr>
+    <td>Name</td>
+    <td>{{.}}</td>
+  </tr>
+  <tr>
+    <td>Email</td>
+    <td>{{.}}</td>
+  </tr>
+  <tr>
+    <td>Joined</td>
+    <td>{{.}}</td>
+  </tr>
+</table>
